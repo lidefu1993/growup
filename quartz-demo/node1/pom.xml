@@ -12,5 +12,12 @@
     <groupId>com.ldf.quartz.node1</groupId>
     <artifactId>node1</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ldf.quartz.core</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
