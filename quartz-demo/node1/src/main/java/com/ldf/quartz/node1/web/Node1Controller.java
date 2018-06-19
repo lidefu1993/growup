@@ -2,6 +2,7 @@ package com.ldf.quartz.node1.web;
 
 import com.ldf.quartz.core.param.JobDetailParam;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
+import com.ldf.quartz.core.param.execute.ExecuteCronParam;
 import com.ldf.quartz.core.param.execute.ExecuteSimpleParam;
 import com.ldf.quartz.node1.service.QuartzService;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +28,14 @@ public class Node1Controller {
 
     @ApiOperation(value = "执行simple任务")
     @RequestMapping(value = "executeSimpleJob", method = RequestMethod.POST)
-    public void executeJob(@RequestBody ExecuteSimpleParam simpleParam) throws SchedulerException, ClassNotFoundException, ParseException {
+    public void executeSimpleJob(@RequestBody ExecuteSimpleParam simpleParam) throws SchedulerException, ClassNotFoundException, ParseException {
         quartzService.simpleJobExecute(simpleParam.getJobDetailParam(), simpleParam.getTriggerParam());
+    }
+
+    @ApiOperation(value = "执行cron任务")
+    @RequestMapping(value = "executeCronJob", method = RequestMethod.POST)
+    public void executeCronJob(@RequestBody ExecuteCronParam cronParam) throws SchedulerException, ClassNotFoundException, ParseException {
+        quartzService.cronJobExecute(cronParam.getJobDetailParam(), cronParam.getTriggerParam());
     }
 
     @ApiOperation(value = "删除任务")
