@@ -8,12 +8,25 @@ import com.ldf.quartz.core.util.BaseUtil;
  */
 public class CronExpressionUtil {
 
+    /**
+     * performCycle 执行周期 、每周、每月
+     * performTime 执行时间
+     *  MINUTE 每分钟执行一次 （20表示每分钟的第二十秒执行一次）
+     *  HOUR 每小时执行一次
+     *      例如 10:30 为分和秒 表示每小时的第十分30秒执行一次
+     *  DAY 对于每天的直接为具体时间（例如：11:30:00）
+     *      例如 11:30:00 表示每天的十一点半执行
+     *  WEEK 对于每周使用下划线（_）分隔为两部分 前半部分为周几（周日-周六 0-6）
+     *      例如 4_11:30:00 表示每周3十一点半执行一次 对应的cron表达式为 0 30 11 ? * 4
+     *  MONTH 每月使用下划线(_)分割为两部分 前半部分为每月的几号
+     *      例如 20_11:30:00 表示每月的20号的十一点半执行一次 对应cron表达式 0 30 11 20 * ?
+     *   注：举例中的字符串为performTime示例
+     */
+
     public static void main(String[] args){
         String s = minuteCron("2");
         System.out.println(s);
     }
-
-
 
     /**
      * 获取cron表达式
