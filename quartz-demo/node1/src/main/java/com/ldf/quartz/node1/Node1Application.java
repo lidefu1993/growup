@@ -1,5 +1,6 @@
 package com.ldf.quartz.node1;
 
+import com.ldf.quartz.core.util.QuartzUtil;
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class Node1Application implements CommandLineRunner{
     public Scheduler scheduler;
     @Override
     public void run(String... args) throws Exception {
-        scheduler.start();
+        QuartzUtil.scheduleStart(scheduler);
         logger.info("---------------------------node1 started-----------------------------------");
     }
 }

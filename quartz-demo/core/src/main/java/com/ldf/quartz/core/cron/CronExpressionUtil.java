@@ -56,7 +56,7 @@ public class CronExpressionUtil {
      * @return
      */
     private static String minuteCron(String performTime){
-        String[] cronArray = {"*","*","?","*","*","*"};
+        String[] cronArray = {"*","*","*","?","*","*"};
         cronArray[0] = performTime;
         return cronArrayToString(cronArray);
     }

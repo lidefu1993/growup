@@ -40,21 +40,6 @@ public class QuartzService {
     }
 
     /**
-     *
-     * @param jobDetailParam
-     * @param triggerParam
-     * @throws ClassNotFoundException
-     * @throws ParseException
-     * @throws SchedulerException
-     */
-    public void cronJobExecute(JobDetailParam jobDetailParam, CronTriggerParam triggerParam) throws ClassNotFoundException, ParseException, SchedulerException {
-        JobDetail jobDetail = JobDetailUtil.jobDetailBuild(jobDetailParam);
-        Trigger trigger = TriggerUtil.cronTriggerBuild(jobDetail, triggerParam);
-        QuartzUtil.scheduleJob(scheduler, jobDetail, trigger);
-        scheduler.start();
-    }
-
-    /**
      * 关闭调度器
      * @throws SchedulerException
      */
