@@ -12,8 +12,8 @@ public class MyJob1 implements Job {
     private static final Logger logger = Logger.getLogger(MyJob1.class);
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        logger.debug("---------------------MyJob1----------------------");
-        logger.debug(" jobKey: " + context.getJobDetail().getKey().toString());
+        logger.info("---------------------MyJob1----------------------");
+        logger.info(" jobKey: " + context.getJobDetail().getKey().toString());
     }
 
 }

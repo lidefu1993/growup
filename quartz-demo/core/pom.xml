@@ -11,5 +11,12 @@
 
     <groupId>com.ldf.quartz.core</groupId>
     <artifactId>core</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.3.10.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>

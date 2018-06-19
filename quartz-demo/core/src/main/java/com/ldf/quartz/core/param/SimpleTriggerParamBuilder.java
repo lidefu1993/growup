@@ -1,23 +1,29 @@
 package com.ldf.quartz.core.param;
 
 import com.ldf.quartz.core.util.BaseUtil;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.quartz.Trigger;
 
 import java.text.ParseException;
 import java.util.Date;
 
 /**
+ * SimpleTriggerParam构造器
  * Created by ldf on 2018/6/15.
  */
+@Setter
+@Accessors(chain = true)
 public class SimpleTriggerParamBuilder {
-
+    private final String DEFAULT_GROUP = "default_group";
+    private final long DEFAULT_INTERVAL = 1000*10;
     private String triggerName;
     private String triggerGroup;
-    private Date startAt;
-    private Date endAt;
+    private String startAt;
+    private String endAt;
     private int misfireInstruction = Trigger.MISFIRE_INSTRUCTION_SMART_POLICY;
     private String triggerDescription;
-    private int priority;
+    private int priority = 5;
     private long repeatInterval;
     private int repeatCount;
 
@@ -30,60 +36,31 @@ public class SimpleTriggerParamBuilder {
 
     public SimpleTriggerParam build(){
         SimpleTriggerParam param = new SimpleTriggerParam();
+        if(BaseUtil.isEmpty(this.triggerName)){
+            this.triggerName = BaseUtil.createUUID();
+        }
         param.setTriggerName(triggerName);
+        if(BaseUtil.isEmpty(this.triggerGroup)){
+            this.triggerGroup = DEFAULT_GROUP;
+        }
         param.setTriggerGroup(triggerGroup);
+        if(BaseUtil.isEmpty(this.startAt)) {
+           startAt = BaseUtil.getNowStr();
+        }
         param.setStartAt(startAt);
+        if(BaseUtil.isEmpty(this.endAt)){
+            this.endAt = "2100-01-01 12:00:00";
+        }
         param.setEndAt(endAt);
+        if(repeatInterval == 0) {
+            repeatInterval = DEFAULT_INTERVAL;
+        }
         param.setRepeatInterval(repeatInterval);
         param.setRepeatCount(repeatCount);
         param.setMisfireInstruction(misfireInstruction);
         param.setPriority(priority);
+        param.setTriggerDescription(this.triggerDescription);
         return param;
     }
 
-    public SimpleTriggerParamBuilder setTriggerName(String triggerName) {
-        this.triggerName = triggerName;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setTriggerGroup(String triggerGroup) {
-        this.triggerGroup = triggerGroup;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setStartAt(Date startAt) {
-        if(startAt == null) startAt = new Date();
-        this.startAt = startAt;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setEndAt(Date endAt) throws ParseException {
-        if(endAt == null) endAt = BaseUtil.strToDate("2100-06-15 00:00:00");
-        this.endAt = endAt;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setMisfireInstruction(int misfireInstruction) {
-        this.misfireInstruction = misfireInstruction;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setTriggerDescription(String triggerDescription) {
-        this.triggerDescription = triggerDescription;
-        return this;
-    }
-
-    public SimpleTriggerParamBuilder setPriority(int priority) {
-        this.priority = priority;
-        return this;
-    }
-
-    public void setRepeatInterval(long repeatInterval) {
-        if(repeatInterval == 0) repeatInterval = 1000;
-        this.repeatInterval = repeatInterval;
-    }
-
-    public void setRepeatCount(int repeatCount) {
-        this.repeatCount = repeatCount;
-    }
 }

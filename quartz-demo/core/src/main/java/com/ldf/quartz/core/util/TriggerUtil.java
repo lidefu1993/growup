@@ -4,6 +4,9 @@ import com.ldf.quartz.core.param.CronTriggerParam;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
 import com.ldf.quartz.core.param.TriggerParam;
 import org.quartz.*;
+
+import java.text.ParseException;
+
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -21,9 +24,11 @@ public class TriggerUtil {
      * @param param
      * @return
      */
-    public static Trigger simpleTriggerBuild(JobDetail jobDetail, SimpleTriggerParam param){
+    public static Trigger simpleTriggerBuild(JobDetail jobDetail, SimpleTriggerParam param) throws ParseException {
         return commonTriggerBuilderBuild(jobDetail, param)
                 .withSchedule( scheduleBuilderBuild(param) )
+                .startAt(BaseUtil.strToDate(param.getStartAt()))
+                .endAt(BaseUtil.strToDate(param.getEndAt()))
                 .build();
     }
 
@@ -33,7 +38,7 @@ public class TriggerUtil {
      * @param param
      * @return
      */
-    public static Trigger cronTriggerBuild(JobDetail jobDetail, CronTriggerParam param){
+    public static Trigger cronTriggerBuild(JobDetail jobDetail, CronTriggerParam param) throws ParseException {
         return commonTriggerBuilderBuild(jobDetail, param)
                 .withSchedule( cronScheduleBuilderBuild(param) )
                 .build();
@@ -46,11 +51,11 @@ public class TriggerUtil {
      * @param param
      * @return
      */
-    private static TriggerBuilder commonTriggerBuilderBuild(JobDetail jobDetail, TriggerParam param){
+    private static TriggerBuilder commonTriggerBuilderBuild(JobDetail jobDetail, TriggerParam param) throws ParseException {
         return newTrigger()
                 .withIdentity(param.getTriggerName(), param.getTriggerGroup())
-                .startAt(param.getStartAt())
-                .endAt(param.getEndAt())
+                .startAt(BaseUtil.strToDate(param.getStartAt()))
+                .endAt(BaseUtil.strToDate(param.getEndAt()))
                 .forJob(jobDetail)
                 .withPriority(param.getPriority());
     }

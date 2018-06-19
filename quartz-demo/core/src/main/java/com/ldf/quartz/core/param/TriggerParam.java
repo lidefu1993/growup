@@ -13,8 +13,8 @@ public class TriggerParam {
 
     private String triggerName;
     private String triggerGroup;
-    private Date startAt;
-    private Date endAt;
+    private String startAt;
+    private String endAt;
     private int misfireInstruction = Trigger.MISFIRE_INSTRUCTION_SMART_POLICY;
     private String triggerDescription;
     private int priority;

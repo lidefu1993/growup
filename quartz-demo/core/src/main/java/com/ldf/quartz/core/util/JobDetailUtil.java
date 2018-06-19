@@ -1,7 +1,11 @@
 package com.ldf.quartz.core.util;
 
+import com.ldf.quartz.core.param.CronTriggerParam;
 import com.ldf.quartz.core.param.JobDetailParam;
+import com.ldf.quartz.core.param.SimpleTriggerParam;
+import org.quartz.Job;
 import org.quartz.JobDetail;
+import org.quartz.SimpleTrigger;
 
 import static org.quartz.JobBuilder.newJob;
 
@@ -16,31 +20,12 @@ public class JobDetailUtil {
      * @param param
      * @return
      */
-    public static JobDetail jobDetailBuild(JobDetailParam param){
+    public static JobDetail jobDetailBuild(JobDetailParam param) throws ClassNotFoundException {
         return newJob()
                 .withIdentity(param.getJobName(), param.getJobGroup())
+                .ofType(QuartzUtil.getJobClass(param.getJobClass()))
                 .withDescription(param.getJobDescription())
                 .build();
-    }
-
-
-    /**
-     * jobdetail参数构建
-     * @param jobName
-     * @param jobGroup
-     * @param jobDescription
-     * @param jobClass
-     * @return
-     */
-    public static JobDetailParam jobDetailParamBuild(String jobName, String jobGroup,
-                                                     String jobDescription, Class jobClass){
-        return JobDetailParam.builder()
-                .jobName(jobName)
-                .jobGroup(jobGroup)
-                .jobDescription(jobDescription)
-                .jobClass(jobClass)
-                .build();
-
     }
 
 }

@@ -1,72 +1,49 @@
 package com.ldf.quartz.core.param;
 
+import com.ldf.quartz.core.util.BaseUtil;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.quartz.Trigger;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
  * Created by ldf on 2018/6/15.
  */
+@Setter
+@Accessors(chain = true)
 public class CronTriggerParamBuilder {
 
     private String triggerName;
     private String triggerGroup;
-    private Date startAt;
-    private Date endAt;
+    private String startAt;
+    private String endAt;
     private int misfireInstruction = Trigger.MISFIRE_INSTRUCTION_SMART_POLICY;
     private String triggerDescription;
-    private int priority;
+    private int priority = 5;
     private String cronExpression;
 
     private CronTriggerParamBuilder(){
 
     }
 
-    private static CronTriggerParamBuilder newCronTriggerParam(){
+    public static CronTriggerParamBuilder newCronTriggerParam(){
         return new CronTriggerParamBuilder();
     }
 
-    private CronTriggerParam build(){
+    public CronTriggerParam build(){
         CronTriggerParam param = new CronTriggerParam();
         param.setTriggerName(triggerName);
         param.setTriggerGroup(triggerGroup);
+        if(BaseUtil.isEmpty(this.startAt)) this.startAt = BaseUtil.getNowStr();
         param.setStartAt(startAt);
-        param.setEndAt(endAt);
+        if(this.endAt != null) param.setEndAt(endAt);
         param.setMisfireInstruction(misfireInstruction);
         param.setPriority(priority);
         param.setCronExpression(cronExpression);
+        param.setTriggerDescription(triggerDescription);
         return param;
     }
 
-    public void setTriggerName(String triggerName) {
-        this.triggerName = triggerName;
-    }
-
-    public void setTriggerGroup(String triggerGroup) {
-        this.triggerGroup = triggerGroup;
-    }
-
-    public void setStartAt(Date startAt) {
-        this.startAt = startAt;
-    }
-
-    public void setEndAt(Date endAt) {
-        this.endAt = endAt;
-    }
-
-    public void setMisfireInstruction(int misfireInstruction) {
-        this.misfireInstruction = misfireInstruction;
-    }
-
-    public void setTriggerDescription(String triggerDescription) {
-        this.triggerDescription = triggerDescription;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
-    }
 }
