@@ -5,6 +5,8 @@ package com.ldf.quartz.core.cron;
  * 执行周期
  */
 public enum PerformCycle {
+    MINUTE,
+    HOUR,
     DAY,
     WEEK,
     MONTH;

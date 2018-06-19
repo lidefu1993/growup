@@ -1,5 +1,6 @@
 package com.ldf.quartz.node1.service;
 
+import com.ldf.quartz.core.param.CronTriggerParam;
 import com.ldf.quartz.core.param.JobDetailParam;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
 import com.ldf.quartz.core.util.*;
@@ -28,6 +29,21 @@ public class QuartzService {
     public void simpleJobExecute(JobDetailParam jobDetailParam, SimpleTriggerParam triggerParam) throws SchedulerException, ClassNotFoundException, ParseException {
         JobDetail jobDetail = JobDetailUtil.jobDetailBuild(jobDetailParam);
         Trigger trigger = TriggerUtil.simpleTriggerBuild(jobDetail, ParameterUtil.simpleTriggerParamBuild(triggerParam));
+        QuartzUtil.scheduleJob(scheduler, jobDetail, trigger);
+        scheduler.start();
+    }
+
+    /**
+     *
+     * @param jobDetailParam
+     * @param triggerParam
+     * @throws ClassNotFoundException
+     * @throws ParseException
+     * @throws SchedulerException
+     */
+    public void cronJobExecute(JobDetailParam jobDetailParam, CronTriggerParam triggerParam) throws ClassNotFoundException, ParseException, SchedulerException {
+        JobDetail jobDetail = JobDetailUtil.jobDetailBuild(jobDetailParam);
+        Trigger trigger = TriggerUtil.cronTriggerBuild(jobDetail, triggerParam);
         QuartzUtil.scheduleJob(scheduler, jobDetail, trigger);
         scheduler.start();
     }

@@ -9,9 +9,11 @@ import com.ldf.quartz.core.util.BaseUtil;
 public class CronExpressionUtil {
 
     public static void main(String[] args){
-        String s = weekCron("4_11:30:00");
+        String s = minuteCron("2");
         System.out.println(s);
     }
+
+
 
     /**
      * 获取cron表达式
@@ -26,11 +28,43 @@ public class CronExpressionUtil {
             return weekCron(performTime);
         }else if(PerformCycle.MONTH.name().equals(performCycle)){
             return monthCron(performTime);
-        }else throw new RuntimeException("暂不支持的运行周期");
+        }else if(PerformCycle.HOUR.name().equals(performCycle)){
+            return hourCron(performTime);
+        }else if(PerformCycle.MINUTE.name().equals(performCycle)){
+            return minuteCron(performTime);
+        }
+        else throw new RuntimeException("暂不支持的运行周期");
+    }
+
+    /**
+     * 分钟
+     * MINUTE ss 每分钟的哪一秒执行
+     * @param performTime
+     * @return
+     */
+    private static String minuteCron(String performTime){
+        String[] cronArray = {"*","*","?","*","*","*"};
+        cronArray[0] = performTime;
+        return cronArrayToString(cronArray);
+    }
+
+    /**
+     * 小时
+     * HOURE mm:ss 每小时的几分几秒执行
+     * @param performTime
+     * @return
+     */
+    private static String hourCron(String performTime){
+        String[] cronArray = {"*","*","*","?","*","*"};
+        DayTime detailTime = getDetailTime( "0:"+performTime );
+        cronArray[0] = detailTime.getSecond();
+        cronArray[1] = detailTime.getMinute();
+        return cronArrayToString(cronArray);
     }
 
     /**
      * 日 cron表达式
+     * DAY hh:mm:ss 每天的什么时间执行
      * @param performTime
      * @return
      */
@@ -45,6 +79,7 @@ public class CronExpressionUtil {
 
     /**
      * 周 cron表达式
+     * WEEK week_hh:mm:ss 每周几的什么时间执行
      * @param performTime
      * @return
      */
@@ -63,6 +98,7 @@ public class CronExpressionUtil {
 
     /**
      * 月 cron表达式
+     * MONTH month_hh:mm:ss 每月几号的什么时间执行
      * @param performTime
      * @return
      */
