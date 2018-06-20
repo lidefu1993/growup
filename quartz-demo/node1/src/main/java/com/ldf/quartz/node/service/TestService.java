@@ -1,4 +1,4 @@
-package com.ldf.quartz.node1.service;
+package com.ldf.quartz.node.service;
 
 import org.springframework.stereotype.Service;
 

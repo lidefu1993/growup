@@ -1,4 +1,4 @@
-package com.ldf.quartz.node1.job;
+package com.ldf.quartz.node.job;
 
 import org.apache.log4j.Logger;
 import org.quartz.Job;

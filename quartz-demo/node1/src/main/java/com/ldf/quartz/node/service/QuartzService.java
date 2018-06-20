@@ -1,11 +1,9 @@
-package com.ldf.quartz.node1.service;
+package com.ldf.quartz.node.service;
 
 import com.ldf.quartz.core.param.CronTriggerParam;
 import com.ldf.quartz.core.param.JobDetailParam;
-import com.ldf.quartz.core.param.JobDetailParamBuilder;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
 import com.ldf.quartz.core.util.*;
-import com.ldf.quartz.node1.job.MyJob1;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,5 +47,9 @@ public class QuartzService {
 
     public boolean delSchedule(String jobName, String jobGroup) throws SchedulerException {
         return QuartzUtil.stopJob(jobName, jobGroup, scheduler);
+    }
+
+    public void startSchedule() throws SchedulerException {
+        QuartzUtil.scheduleStart(scheduler);
     }
 }

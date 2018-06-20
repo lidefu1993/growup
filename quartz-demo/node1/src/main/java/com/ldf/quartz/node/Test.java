@@ -1,4 +1,4 @@
-package com.ldf.quartz.node1;
+package com.ldf.quartz.node;
 
 import com.ldf.quartz.core.param.JobDetailParam;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
@@ -6,8 +6,8 @@ import com.ldf.quartz.core.util.JobDetailUtil;
 import com.ldf.quartz.core.util.QuartzUtil;
 import com.ldf.quartz.core.util.ScheduleUtil;
 import com.ldf.quartz.core.util.TriggerUtil;
-import com.ldf.quartz.node1.job.MyJob1;
-import com.ldf.quartz.node1.service.QuartzService;
+import com.ldf.quartz.node.job.MyJob1;
+import com.ldf.quartz.node.service.QuartzService;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -47,7 +47,7 @@ public class Test {
         return newJobDetailParam()
                 .setJobName("test-001")
                 .setJobGroup("group-001")
-                .setJobClass("com.ldf.quartz.node1.job.MyJob1")
+                .setJobClass("com.ldf.quartz.node.job.MyJob1")
                 .setJobDescription("测试")
                 .build();
     }

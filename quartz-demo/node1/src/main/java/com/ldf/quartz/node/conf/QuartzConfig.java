@@ -1,15 +1,12 @@
-package com.ldf.quartz.node1.conf;
+package com.ldf.quartz.node.conf;
 
 import com.ldf.quartz.core.util.PropertiesUtil;
-import com.ldf.quartz.core.util.QuartzUtil;
 import com.ldf.quartz.core.util.ScheduleUtil;
 import org.quartz.Scheduler;
 import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Properties;
 
 /**
  * Created by ldf on 2018/6/15.

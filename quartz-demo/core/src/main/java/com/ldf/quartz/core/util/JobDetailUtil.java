@@ -25,6 +25,7 @@ public class JobDetailUtil {
                 .withIdentity(param.getJobName(), param.getJobGroup())
                 .ofType(QuartzUtil.getJobClass(param.getJobClass()))
                 .withDescription(param.getJobDescription())
+                .requestRecovery(true) //设置任务可恢复
                 .build();
     }
 
