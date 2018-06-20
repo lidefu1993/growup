@@ -1,5 +1,8 @@
 package com.ldf.quartz.node1;
 
+import com.ldf.quartz.core.listener.MyJobListener;
+import com.ldf.quartz.core.listener.MyScheduleListener;
+import com.ldf.quartz.core.listener.MyTriggerListener;
 import com.ldf.quartz.core.param.JobDetailParam;
 import com.ldf.quartz.core.param.SimpleTriggerParam;
 import com.ldf.quartz.core.util.JobDetailUtil;
@@ -23,23 +26,26 @@ import static com.ldf.quartz.core.param.SimpleTriggerParamBuilder.newSimpleTrigg
  */
 public class Test {
 
-    public static void main(String[] args) throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, ParseException, ClassNotFoundException {
         System.out.println(MyJob1.class);
-//        simpleJobTest();
+        simpleJobTest();
     }
 
 
 
     private static void simpleJobTest() throws SchedulerException, ClassNotFoundException, ParseException {
-        QuartzService quartzService = new QuartzService();
-        quartzService.simpleJobExecute(jobDetailParamTest(), simpleTriggerParamTest());
+        simpleJobExecute(jobDetailParamTest(), simpleTriggerParamTest());
     }
 
-    public void simpleJobExecute(JobDetailParam jobDetailParam, SimpleTriggerParam triggerParam) throws SchedulerException, ClassNotFoundException, ParseException {
+    public static void simpleJobExecute(JobDetailParam jobDetailParam, SimpleTriggerParam triggerParam) throws SchedulerException, ClassNotFoundException, ParseException {
         Scheduler scheduler = ScheduleUtil.defaultScheduleBuild();
         JobDetail jobDetail = JobDetailUtil.jobDetailBuild(jobDetailParam);
         Trigger trigger = TriggerUtil.simpleTriggerBuild(jobDetail, triggerParam);
         QuartzUtil.scheduleJob(scheduler, jobDetail, trigger);
+        //添加监听
+        scheduler.getListenerManager().addSchedulerListener(new MyScheduleListener());
+        scheduler.getListenerManager().addTriggerListener(new MyTriggerListener());
+        scheduler.getListenerManager().addJobListener(new MyJobListener());
         scheduler.start();
     }
 
