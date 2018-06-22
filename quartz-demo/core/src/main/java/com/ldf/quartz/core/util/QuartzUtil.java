@@ -1,6 +1,11 @@
 package com.ldf.quartz.core.util;
 
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ldf on 2018/6/15.
@@ -48,6 +53,20 @@ public class QuartzUtil {
     public static boolean stopJob(String jobName, String jobGroup, Scheduler scheduler) throws SchedulerException {
         JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
         return scheduler.deleteJob(jobKey);
+    }
+
+    public static List<JobKey> getAllJobs(Scheduler scheduler) throws SchedulerException {
+        List<JobKey> allJobs = new ArrayList<>();
+        List<String> jobGroupNames = scheduler.getJobGroupNames();
+        jobGroupNames.stream().forEach(jobGroupName->{
+            try {
+                allJobs.addAll(scheduler.getJobKeys(GroupMatcher.jobGroupEquals(jobGroupName)));
+            } catch (SchedulerException e) {
+                e.printStackTrace();
+            }
+
+        });
+        return allJobs;
     }
 
     public static Class getJobClass(String jobClass) throws ClassNotFoundException {

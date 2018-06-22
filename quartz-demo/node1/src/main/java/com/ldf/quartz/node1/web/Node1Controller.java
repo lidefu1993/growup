@@ -50,4 +50,10 @@ public class Node1Controller {
         quartzService.shutdown();
     }
 
+    @ApiOperation(value = "获取所有任务")
+    @RequestMapping(value = "getAllJobs", method = RequestMethod.POST)
+    public Object getAllJobs() throws SchedulerException {
+        return quartzService.getAllJobs();
+    }
+
 }

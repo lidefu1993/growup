@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Created by ldf on 2018/6/15.
@@ -49,5 +50,9 @@ public class QuartzService {
 
     public boolean delSchedule(String jobName, String jobGroup) throws SchedulerException {
         return QuartzUtil.stopJob(jobName, jobGroup, scheduler);
+    }
+
+    public List<JobKey> getAllJobs() throws SchedulerException {
+        return QuartzUtil.getAllJobs(scheduler);
     }
 }
